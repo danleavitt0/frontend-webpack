@@ -3,13 +3,16 @@
  */
 
 import element from 'vdux/element'
+import Router from './router'
 
 /**
  * App
  */
 
 function render () {
-  return <div>Hello world!!!!</div>
+  return <div>
+    <Router/>
+  </div>
 }
 
 /**

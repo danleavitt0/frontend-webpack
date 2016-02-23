@@ -4,6 +4,7 @@
 
 import multi from 'redux-multi'
 import effects from 'redux-effects'
+import location from 'redux-effects-location'
 
 /**
  * Middleware
@@ -11,7 +12,8 @@ import effects from 'redux-effects'
 
 const middleware = [
   multi,
-  effects
+  effects,
+  location(window)
 ]
 
 /**
