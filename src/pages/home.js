@@ -1,8 +1,11 @@
 import element from 'vdux/element'
+import Toolbar from '../components/toolbar'
 
 function render ({props}) {
-  console.log(props)
-  return <div><a href="/home">Home</a>Home Page</div>
+  return <div>
+    <Toolbar
+      title='Cycle Shell'/>
+  </div>
 }
 
 export default {

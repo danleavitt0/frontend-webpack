@@ -9,9 +9,9 @@ import Router from './router'
  * App
  */
 
-function render () {
+function render ({state, props}) {
   return <div>
-    <Router/>
+    <Router />
   </div>
 }
 

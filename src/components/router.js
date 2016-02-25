@@ -3,10 +3,13 @@ import Document from 'vdux/document'
 import HomePage from '../pages/home'
 import NotFound from '../pages/notFound'
 import enroute from 'enroute'
+import {setUrl} from 'redux-effects-location'
 import combineReducers from '@f/combine-reducers'
 import handleActions from '@f/handle-actions'
-import {setUrl} from 'redux-effects-location'
+import createAction from '@f/create-action'
 import element from 'vdux/element'
+
+const loadUrl = createAction('LOAD_URL')
 
 const router = enroute({
   '/': (params, props) => <HomePage {...props} />,
@@ -19,26 +22,32 @@ function initialState () {
   }
 }
 
-function render ({local, state}) {
-  console.log(state)
+function render ({local, state, props}) {
   return (
-    <Window onPopstate={local(setUrl)}>
-      <Document onClick={handleLinkClicks(local(setUrl))}>
-        {
-          router(state.url)
-        }
-      </Document>
-    </Window>
+    <Window onPopstate={() => handlePopState(document.location.pathname, local(loadUrl))}>
+       <Document onClick={handleLinkClicks(local(loadUrl))}>
+         {
+           router(state.url)
+         }
+       </Document>
+     </Window>
   )
 }
 
-function handleLinkClicks (setUrl) {
+function handlePopState (location, loadedUrl) {
+  return [setUrl(location), loadedUrl(location)]
+}
+
+function handleLinkClicks (loadedUrl) {
   return e => {
     if (e.target.nodeName === 'A') {
       const href = e.target.getAttribute('href')
       if (isLocal(href)) {
         e.preventDefault()
-        return setUrl(href)
+        return [
+          loadedUrl(href),
+          setUrl(href)
+        ]
       }
     }
   }
@@ -50,12 +59,13 @@ function isLocal (url) {
 
 function reducer (state, action) {
   switch (action.type) {
-    case 'SET_URL':
+    case 'LOAD_URL':
       return {
         ...state,
-        url: action.payload.value
+        url: action.payload
       }
   }
+  return state
 }
 
 export default {

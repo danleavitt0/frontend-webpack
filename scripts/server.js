@@ -12,7 +12,7 @@ export default function *(req, urls) {
         </script>
         <script type='text/javascript' src='${urls.js}'></script>
       </head>
-      <body>
+      <body style="margin:0px;">
         ${html}
       </body>
      </html>

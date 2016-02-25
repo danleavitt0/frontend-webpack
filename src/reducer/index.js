@@ -1,3 +1,5 @@
+import {NEW_ROUTE} from '../actions'
+
 /**
  * Reducer
  */
