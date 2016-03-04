@@ -3,6 +3,8 @@
  */
 
 import middleware from './middleware/server'
+import * as jss from 'jss-simple'
+import camelCase from 'jss-camel-case'
 import App from './components/app'
 import element from 'vdux/element'
 import reducer from './reducer'
